@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Share+Tech+Mono&display=swap');
+@import "tailwindcss";
+
+:root{
+    --gold: #C8AA6E;
+    --gold-light: #F0E6D3;
+    --gold-dark: #785A28;
+    --blue-deep: #0A1428;
+    --blue-mid: #091428;
+    --blue-accent: #0BC4C2;
+    --blue-light: #1E3A5F;
+    --red-accent: #C73B3B;
+    --green-accent: #1DB954;
+    --gray: #A0A8B0;
+    --text: #C8D4E0;
+    --border: rgba(200,170,110,0.25);
+}
+
+
+body {
+    background: var(--blue-deep);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* BG EFFECT */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(14,46,90,0.6) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(11,196,194,0.05) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
