@@ -1,12 +1,15 @@
 
-<script setup>
+<script setup lang="ts">
 import { ref, computed } from 'vue'
 
 import PhaseTabs     from '@/components/Bracket/PhaseTabs.vue'
  import PhaseRenderer from '@/components/Bracket/PhaseRenderer.vue'
 
 import { mockTournament } from '@/data/tournaments'
-import { mockPhases }     from '@/data/index'
+import { mockPhases } from '@/data';
+
+
+const phasesData: Record<number, any> = mockPhases;
 
 // ── datos ──────────────────────────────────────
 const tournament = ref(mockTournament)
@@ -15,12 +18,13 @@ const tournament = ref(mockTournament)
 const activePhase = ref(tournament.value.phases[0])
 
 // partidos de la fase activa
-const activeMatches = computed(() =>
-  mockPhases[activePhase.value.id]?.matches ?? []
-)
+const activeMatches = computed(() => {
+  if (!activePhase.value) return [];
+  return phasesData[activePhase.value.id]?.matches ?? []
+})
 
 // ── eventos ────────────────────────────────────
-function onPhaseChange(phase) {
+function onPhaseChange(phase:any) {
   activePhase.value = phase
 }
 </script>
@@ -30,6 +34,7 @@ function onPhaseChange(phase) {
 
     <!-- Tabs de fases -->
     <PhaseTabs
+      v-if="activePhase"
       :phases="tournament.phases"
       :active-phase-id="activePhase.id"
       @change="onPhaseChange"

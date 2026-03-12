@@ -20,22 +20,18 @@
   </div>
 </template>
 
-<script setup>
+<script  setup lang="ts">
 import { computed } from 'vue'
 
 
-const props = defineProps({
-  player:    { type: Object, required: true },
-  rank:      { type: Number, required: true },
-  maxPoints: { type: Number, required: true }
-})
+const props = defineProps<{
+  player:    any,
+  rank:      number,
+  maxPoints: number
+}>()
 
 const accuracy = computed(() =>
   Math.round((props.player.hits / props.player.totalPicks) * 100)
-)
-
-const progress = computed(() =>
-  Math.round((props.player.points / props.player.maxPoints) * 100)
 )
 
 const accuracyClass = computed(() => {

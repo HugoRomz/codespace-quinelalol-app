@@ -20,15 +20,22 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue';
 import MatchCard from '@components/Bracket/shared/MatchCard.vue'
 
-const props = defineProps({
-  matches: { type: Array,  default: () => [] },
-  variant: { type: String, default: 'normal' },
-  label: { type: String, required: false }
-})
+const props = withDefaults(
+  defineProps<{
+    matches: any[];        
+    variant?: string;      
+    label?: string;        
+  }>(),
+  {
+    matches: () => [],     
+    variant: 'normal',     
+    label: ''              
+  }
+);
 
 const labelClass = computed(() => ({
     'text-[var(--blue-accent)]': props.variant === 'normal',

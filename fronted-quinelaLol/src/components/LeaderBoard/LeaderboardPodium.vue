@@ -6,13 +6,10 @@
   </div>
 </template>
 
-<script setup>
-import PodiumCard from './PodiumCard.vue'
+<script setup lang="ts">
+import PodiumCard from '@components/LeaderBoard/PodiumCard.vue'
 
-defineProps({
-  users: {
-    type: Array,
-    required: true
-  }
-})
+defineProps<{
+  users: any[]
+}>()
 </script>

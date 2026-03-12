@@ -25,14 +25,20 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
-const props = defineProps({
-  teams:   { type: Array,  default: () => [] },
-  label:   { type: String, required: true },
-  type:    { type: String, default: 'advance' }, // 'advance' | 'eliminated'
-})
+const props = withDefaults(
+  defineProps<{
+    teams: any[];        
+    label: string;        
+    type?: string;       
+  }>(),
+  {
+    teams: () => [],      
+    type: 'advance'      
+  }
+);
 
 const isAdvance = computed(() => props.type === 'advance')
 

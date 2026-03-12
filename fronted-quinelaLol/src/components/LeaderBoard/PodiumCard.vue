@@ -11,17 +11,13 @@
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
+<script setup lang="ts">
 
-const props = defineProps({
-  user: { type: Object,          required: true },
-  rank:   { type: [Number, String], required: true }
-})
+const props = defineProps<{
+  user: any,
+  rank: string
+}>()
 
-const accuracy = computed(() =>
-  Math.round((props.user.hits / props.user.totalPicks) * 100)
-)
 </script>
 
 

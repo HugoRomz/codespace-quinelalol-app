@@ -1,9 +1,9 @@
 import { computed } from 'vue'
 
-export function usePhaseMatches(matches) {
+export function usePhaseMatches(matches:any) {
 
   const grouped = computed(() =>
-    matches.value.reduce((acc, match) => {
+    matches.value.reduce((acc:any, match:any) => {
       const key = match.match_group
       if (!acc[key]) acc[key] = []
       acc[key].push(match)

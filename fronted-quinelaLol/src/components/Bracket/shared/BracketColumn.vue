@@ -22,15 +22,20 @@
 }
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 import MatchCard from './MatchCard.vue'
 
-const props = defineProps({
-  label:   { type: String, required: true },
-  matches: { type: Array,  required: true },
-  variant: { type: String, default: 'upper' },
-})
+const props = withDefaults(
+  defineProps<{
+    label: string;      // Esto es required: true por defecto
+    matches: any[];     // Esto es required: true por defecto
+    variant?: string;   // El '?' permite que sea opcional (para tener default)
+  }>(),
+  {
+    variant: 'upper'    // Aquí defines el valor por defecto
+  }
+);
 
 const labelClass = computed(() => ({
   'text-blue-accent border-blue-accent/30':  props.variant === 'upper',

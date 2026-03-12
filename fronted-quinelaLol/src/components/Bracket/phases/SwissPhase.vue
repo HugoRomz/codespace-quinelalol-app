@@ -1,3 +1,55 @@
+
+<script setup lang="ts">
+import { computed, toRef } from 'vue'
+import { usePhaseMatches } from '@/composables/usePhaseMatches.js'
+import SwissColumn    from '@components/Bracket/phases/swiss/SwissColumn.vue'
+import SwissGroup     from '@components/Bracket/phases/swiss/SwissGroup.vue'
+import SwissResult  from '@components/Bracket/phases/swiss/SwissResult.vue'
+
+const props = defineProps<{
+  phase:   any,
+  matches: any,
+}>()
+
+const { grouped } = usePhaseMatches(toRef(props, 'matches'))
+// equipos que ya avanzaron
+const advancedTeams = computed(() => ({
+  // ganadores de 2-0 → ya tienen record 3-0
+  '3-0': getWinners('2-0'),
+
+  // ganadores de 2-1 → ya tienen record 3-1
+  '3-1': getWinners('2-1'),
+
+  // ganadores de 2-2 → ya tienen record 3-2
+  '3-2': getWinners('2-2'),
+}))
+
+// equipos eliminados
+const eliminatedTeams = computed(() => ({
+  // perdedores de 0-2 → ya tienen record 0-3
+  '0-3': getLosers('0-2'),
+
+  // perdedores de 1-2 → ya tienen record 1-3
+  '1-3': getLosers('1-2'),
+
+  // perdedores de 2-2 → ya tienen record 2-3
+  '2-3': getLosers('2-2'),
+}))
+
+// helpers
+function getWinners(record:any) {
+  return (grouped.value[record] ?? [])
+    .filter((m:any) => m.winner_team_id)
+    .map((m:any) => m.team_a?.id === m.winner_team_id ? m.team_a : m.team_b)
+}
+
+function getLosers(record:any) {
+  return (grouped.value[record] ?? [])
+    .filter((m:any) => m.winner_team_id)
+    .map((m:any)=> m.team_a?.id !== m.winner_team_id ? m.team_a : m.team_b)
+}
+</script>
+
 <template>
   <div class="overflow-x-auto pb-4">
     <div class="grid grid-cols-6 gap-4 min-w-max">
@@ -45,54 +97,3 @@
     </div>
   </div>
 </template>
-
-<script setup>
-import { computed, toRef } from 'vue'
-import { usePhaseMatches } from '@/composables/usePhaseMatches.js'
-import SwissColumn    from '@components/Bracket/phases/swiss/SwissColumn.vue'
-import SwissGroup     from '@components/Bracket/phases/swiss/SwissGroup.vue'
-import SwissResult  from '@components/Bracket/phases/swiss/SwissResult.vue'
-
-const props = defineProps({
-  phase:   { type: Object, required: true },
-  matches: { type: Array,  required: true },
-})
-
-const { grouped } = usePhaseMatches(toRef(props, 'matches'))
-// equipos que ya avanzaron
-const advancedTeams = computed(() => ({
-  // ganadores de 2-0 → ya tienen record 3-0
-  '3-0': getWinners('2-0'),
-
-  // ganadores de 2-1 → ya tienen record 3-1
-  '3-1': getWinners('2-1'),
-
-  // ganadores de 2-2 → ya tienen record 3-2
-  '3-2': getWinners('2-2'),
-}))
-
-// equipos eliminados
-const eliminatedTeams = computed(() => ({
-  // perdedores de 0-2 → ya tienen record 0-3
-  '0-3': getLosers('0-2'),
-
-  // perdedores de 1-2 → ya tienen record 1-3
-  '1-3': getLosers('1-2'),
-
-  // perdedores de 2-2 → ya tienen record 2-3
-  '2-3': getLosers('2-2'),
-}))
-
-// helpers
-function getWinners(record) {
-  return (grouped.value[record] ?? [])
-    .filter(m => m.winner_team_id)
-    .map(m => m.team_a?.id === m.winner_team_id ? m.team_a : m.team_b)
-}
-
-function getLosers(record) {
-  return (grouped.value[record] ?? [])
-    .filter(m => m.winner_team_id)
-    .map(m => m.team_a?.id !== m.winner_team_id ? m.team_a : m.team_b)
-}
-</script>

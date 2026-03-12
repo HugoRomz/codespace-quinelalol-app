@@ -1,3 +1,21 @@
+
+<script setup lang="ts">
+
+const props = defineProps<{
+  phases: any[];
+  activePhaseId: number,
+}>();
+
+defineEmits(['change'])
+
+// ── helpers ────────────────────────────────────
+function isActive(phaseId:any) {
+  return phaseId === props.activePhaseId
+}
+
+
+</script>
+
 <template>
   <div class="phase-tabs flex gap-1.5 mb-7 flex-wrap">
     <button
@@ -30,21 +48,3 @@
 
 
 </style>
-
-<script setup>
-import { mockPhases } from '@/data/index';
-
-const props = defineProps({
-  phases:        { type: Array,  required: true },
-  activePhaseId: { type: Number, required: true },
-})
-
-defineEmits(['change'])
-
-// ── helpers ────────────────────────────────────
-function isActive(phaseId) {
-  return phaseId === props.activePhaseId
-}
-
-
-</script>

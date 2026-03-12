@@ -53,15 +53,15 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { computed, toRef } from 'vue'
 import { usePhaseMatches } from '@/composables/usePhaseMatches.js'
 import BracketColumn from '../shared/BracketColumn.vue'
 
-const props = defineProps({
-  phase:   { type: Object, required: true },
-  matches: { type: Array,  required: true },
-})
+const props = defineProps<{
+  phase:   any;
+  matches: any
+}>()
 
 const { grouped, groupKeys } = usePhaseMatches(toRef(props, 'matches'))
 
@@ -77,7 +77,7 @@ const lowerKeys = computed(() =>
   groupKeys.value.filter(k => k.startsWith('lower'))
 )
 
-function formatLabel(key) {
+function formatLabel(key:string) {
   return key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())
 }
 </script>

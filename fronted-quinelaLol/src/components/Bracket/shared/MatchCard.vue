@@ -101,7 +101,7 @@
 
 </style>
 
-<script setup>
+<script setup lang="ts">
 import { computed } from 'vue'
 
 const props = defineProps({
@@ -110,7 +110,7 @@ const props = defineProps({
 
 const isFinished = computed(() => props.match.status === 'FINISHED')
 
-function isWinner(teamId) {
+function isWinner(teamId:any) {
   if (!isFinished.value) return null
   return props.match.winner_team_id === teamId
 }

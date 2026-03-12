@@ -22,13 +22,12 @@
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
+<script setup lang="ts">
 import UserRow from '@components/LeaderBoard/UserRow.vue'
 
 
-const props = defineProps({
-  users:   { type: Array,  required: true },
-  maxPoints: { type: Number, required: true }
-})
+const props = defineProps<{
+  users:   any[]
+  maxPoints: number
+}>()
 </script>
